@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite App</title>
+  </head>
+  <body>
+    <div class="gameMenu">
+      <div class="gameMenu__menu">
+        <div class="gameMenu__menu__buttons">
+          <button class="gameButton">Start Game</button>
+          <button class="gameButton">Options</button>
+        </div>
+        <p class="gameMenu__menu__inst">
+          <br><b>How to play</b><br>
+          To start moving, press the arrow down key.<br>
+          To move the player, use left and right arrow keys.<br>
+          Don't hit the walls! <br><br>
+          <b>VERSION: 0.1.0 (early alpha)</b><br>
+          <i>NOTE: Doesn't scale properly on all resolutions.<br>
+            (For now: best experience in fullHD resolution)
+          </i>
+        </p>
+      </div>
+      <div class="gameMenu__playing">
+        <div class="gameMenu__playing__buttons">
+          <button class="gameButton">Quit</button>
+          <button class="gameButton">Retry</button>
+          <button class="gameButton">Options</button>
+        </div>
+        <div class="gameMenu__playing__textArea">
+          <p class="gameMenu__playing__textArea__score">10</p>
+        </div>
+      </div>
+      <div class="gameMenu__gameOver">
+        <button class="gameButton">Retry</button>
+        <button class="gameButton">Main Menu</button>
+      </div>
+    </div>
+    <canvas id="canvas"></canvas>
+    <script type="module" src="./src/ballsy/ballsy.js"></script>
+  </body>
+</html>

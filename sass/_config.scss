@@ -1,0 +1,18 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Verdana";
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+@mixin flexIt($dir: column, $justCont: center, $alignIt: center) {
+  display: flex;
+  justify-content: $justCont;
+  align-items: $alignIt;
+  flex-direction: $dir;
+}
