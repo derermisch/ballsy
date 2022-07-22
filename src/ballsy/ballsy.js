@@ -3,7 +3,7 @@ import Camera from "./camera.js"
 import * as UTILS from "./utils"
 import { Debug } from "./debug"
 import { initPlayer, Player } from "./player"
-import { inputs, updateHorizontalAxis, resetInputs } from "./input"
+import { inputs, updateHorizontalAxis, resetInputs, initInputs } from "./input"
 import {
     initTracks, renderTracks, updateTracks,
     tracks, currentTrackInd, generateInitialTracks, score
@@ -23,13 +23,14 @@ let deltaTime; // time since last frame in seconds
 let trackDimensions = { width: 200, height: 500 }
 ctx.font = '25px Arial';
 ctx.lineWidth = 5
+const DEBUG_skipMenu = true
 
 // -- Canvas resizing --
 const resizeCanvas = async () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
-    cam.distance = 2000
-    // console.log(cam.getDimensions_screenToWorld())
+    cam.distance = cam.getDistanceBasedOnTrackHeight(trackDimensions.height, 2.5)
+    cam.updateViewport()
     ctx.lineWidth = 5
     window.getSelection().removeAllRanges()
 }
@@ -105,7 +106,6 @@ const gameLoop = (timeStamp) => {
 
     reqId = requestAnimationFrame(gameLoop)
 }
-// gameLoop()
 
 window.addEventListener("startGameLoop", (e) => {
     // document.body.style.cursor = "none"
@@ -117,3 +117,9 @@ window.addEventListener("gameOver", () => {
     // document.body.style.cursor = "auto"
     playing = false
 }, true)
+
+if (DEBUG_skipMenu){
+    initInputs()
+    document.querySelector(".gameMenu__menu").style.visibility = "hidden"
+    gameLoop()
+}

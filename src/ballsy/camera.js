@@ -133,11 +133,25 @@ export default class Camera {
     // Get screen dimensions (screenToWorld) by FABE
     getDimensions_screenToWorld = () => {
         return {
-            width:  Math.abs(this.screenToWorld(this.context.canvas.width,0).x) - 
-                    Math.abs(this.screenToWorld(0,0).x),
-            height: Math.abs(this.screenToWorld(0, this.context.canvas.height).y) - 
-                    Math.abs(this.screenToWorld(0, 0).y)
+            width: Math.abs(this.screenToWorld(this.context.canvas.width, 0).x) -
+                Math.abs(this.screenToWorld(0, 0).x),
+            height: Math.abs(this.screenToWorld(0, this.context.canvas.height).y) -
+                Math.abs(this.screenToWorld(0, 0).y)
         }
+    }
+
+    screenToWorld_zeroBased = (vector) => {
+        const vectorZero = this.screenToWorld(0, 0)
+        const vecScreenToWorld = this.screenToWorld(vector.x, vector.y)
+        return {
+            x: vectorZero.x + vecScreenToWorld.x,
+            y: vectorZero.y + vecScreenToWorld.y
+        }
+    }
+
+    getDistanceBasedOnTrackHeight = (trackHeight, trackAmount = 2.5) => {
+        return ((trackHeight * trackAmount) * this.context.canvas.width)
+            / (Math.tan(this.fieldOfView) * this.context.canvas.height)
     }
 
     /**

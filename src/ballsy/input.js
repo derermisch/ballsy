@@ -14,6 +14,11 @@ export const resetInputs = () => {
     inputs.horizontalAxis = 0
 }
 
+export const initInputs = () => {
+    listenToInputs = true
+    inputs.DEBUG_stopPlayer = true
+}
+
 const getAxisHorizontal = () => {
     if (inputs.left > 0) return -1
     if (inputs.right > 0) return 1
@@ -24,14 +29,9 @@ export const updateHorizontalAxis = () => {
     inputs.horizontalAxis = getAxisHorizontal()
 }
 
-
 let listenToInputs = false
 
-window.addEventListener("startGameLoop", () => {
-    listenToInputs = true
-    inputs.DEBUG_stopPlayer = true
-}, true)
-
+window.addEventListener("startGameLoop", initInputs, true)
 window.addEventListener("gameOver", resetInputs , true)
 
 window.addEventListener("keydown", (e) => {
