@@ -2,12 +2,12 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Verdana";
 }
 
 html, body {
   width: 100%;
   height: 100%;
+  font-family: "Verdana", sans-serif;
 }
 
 @mixin flexIt($dir: column, $justCont: center, $alignIt: center) {
@@ -15,4 +15,10 @@ html, body {
   justify-content: $justCont;
   align-items: $alignIt;
   flex-direction: $dir;
+}
+
+@mixin centerDiv () {
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }

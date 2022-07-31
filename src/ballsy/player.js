@@ -34,18 +34,19 @@ const updateMoveVector = (moveVector = { x: 0, y: -1 }, angle = 10, speed = 5) =
 }
 
 export class Player {
-    constructor(pos = { x: center.x, y: center.y }, radius = 10, color = "red", rotationSpeedAngle = 3) {
+    constructor(pos = { x: center.x, y: center.y }, radius = 10, color = "red", rotationSpeedAngle = 3, speed = 5) {
         this.pos = { x: pos.x, y: pos.y - radius * 2}
         this.radius = radius
         this.color = color
+        this.speed = speed
 
         this.moveVector = { x: 0, y: -1 }
         this.rotationSpeedAngle = rotationSpeedAngle
     }
-    move() {
+    move(addRotation, addSpeed) {
         // ctx.beginPath()
         // ctx.fillStyle = this.color
-        this.moveVector = updateMoveVector(this.moveVector, this.rotationSpeedAngle)
+        this.moveVector = updateMoveVector(this.moveVector, this.rotationSpeedAngle + addRotation, this.speed + addSpeed)
         if (!inputs.DEBUG_stopPlayer) {
             this.pos.x += this.moveVector.x
             this.pos.y += this.moveVector.y

@@ -23,7 +23,17 @@ let deltaTime; // time since last frame in seconds
 let trackDimensions = { width: 200, height: 500 }
 ctx.font = '25px Arial';
 ctx.lineWidth = 5
+const playerSpeed = 5
+const playerRotationSpeed = 3
 const DEBUG_skipMenu = false
+let touchEnabled = false
+
+// -- Check if touch device --
+const isTouchEnabled = () => {
+    return ('ontouchstart' in window) ||
+        (navigator.maxTouchPoints > 0) ||
+        (navigator.msMaxTouchPoints > 0);
+}
 
 // -- Canvas resizing --
 const resizeCanvas = async () => {
@@ -34,6 +44,9 @@ const resizeCanvas = async () => {
     cam.updateViewport()
     ctx.lineWidth = 5
     window.getSelection().removeAllRanges()
+    if (isTouchEnabled){
+        touchEnabled = true
+    }
 }
 resizeCanvas()
 window.addEventListener("resize", () => {
@@ -43,7 +56,7 @@ window.addEventListener("resize", () => {
 // -- Object initializations --
 const center = { x: canvas.width / 2, y: canvas.height / 2 }
 const DEBUG = new Debug(ctx, cam)
-const player = new Player(center);
+const player = new Player(center, 10, "red", playerRotationSpeed, playerSpeed);
 UTILS.init(DEBUG)
 initTracks(ctx, UTILS, DEBUG, 20, center, trackDimensions)
 initPlayer(ctx, inputs, center, DEBUG, UTILS)
@@ -56,6 +69,8 @@ let playing = true
 let oldTimeStamp;
 let fps;
 let reqId;
+let addSpeed = 0
+let addRotation = 0
 const gameLoop = (timeStamp) => {
     if (!playing) {
         // reset inputs first
@@ -84,7 +99,8 @@ const gameLoop = (timeStamp) => {
     updateHorizontalAxis()
 
     // GameObject logic
-    player.move()
+    // const addSpeed = (score > 0) ? playerSpeed / 100
+    player.move(addRotation, addSpeed)
     if (hasCollision(currentTrackInd)) {
         playing = false // condition for game over
     }
@@ -96,7 +112,7 @@ const gameLoop = (timeStamp) => {
 
     // UI logic
     // fillTextAt(score)
-    showTextArea(fps)
+    showTextArea(score)
 
     // Debug logic
     // DEBUG.showFPS(fps)
@@ -121,6 +137,15 @@ window.addEventListener("startGameLoop", (e) => {
 window.addEventListener("gameOver", () => {
     // document.body.style.cursor = "auto"
     playing = false
+    addRotation = 0
+    addSpeed = 0
+}, true)
+
+window.addEventListener("scoreIncreased", () => {
+    // console.log("increased score")
+    addSpeed = score * (5 / 100)
+    addRotation = score * (0.5 / 100)
+    // console.log("add speed: ", addSpeed, " add rot: ", addRotation)
 }, true)
 
 if (DEBUG_skipMenu) {

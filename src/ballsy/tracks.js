@@ -203,8 +203,10 @@ export const renderTracks = async () => {
     }
 }
 
+const scoreIncreasedEvent = new CustomEvent("scoreIncreased")
 export const updateTracks = () => {
     if (tracks === undefined) return
+    window.dispatchEvent(scoreIncreasedEvent)
     if (currentTrackInd < Math.round(generatedTracksAmount / 2) - 1) { //"middle" of arr not reached yet
         score++
         currentTrackInd++

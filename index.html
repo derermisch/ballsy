@@ -14,10 +14,11 @@
         </div>
         <p class="gameMenu__menu__inst">
           <br><b>How to play</b><br>
-          To start moving, press the arrow down key.<br>
-          To move the player, use left and right arrow keys.<br>
+          To toggle movement, press the arrow down key.<br>
+          To stir the player, use left and right arrow keys.<br>
+          The further you'll go, the faster you'll be.<br>
           Don't hit the walls! <br><br>
-          <b>VERSION: 0.1.3 (early alpha)</b><br>
+          <b>VERSION: 0.1.3 (early alpha)</b>
         </p>
       </div>
       <div class="gameMenu__playing">
@@ -31,8 +32,13 @@
         </div>
       </div>
       <div class="gameMenu__gameOver">
-        <button class="gameButton">Retry</button>
-        <button class="gameButton">Main Menu</button>
+        <div class="gameMenu__gameOver__buttons">
+          <div class="gameMenu__gameOver__textArea">
+            <p class="gameMenu__gameOver__textArea__score">SCORE: 0</p>
+          </div>
+          <button class="gameButton">Retry</button>
+          <button class="gameButton">Main Menu</button>
+        </div>
       </div>
     </div>
     <canvas id="canvas"></canvas>
