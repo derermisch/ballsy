@@ -8,8 +8,8 @@ import {
     initTracks, renderTracks, updateTracks,
     tracks, currentTrackInd, generateInitialTracks, score
 } from './tracks'
-import { initCollision, hasCollision } from './collision'
-import { showGameOverMenu, showTextArea} from './menu'
+import { initCollision, hasCollision, hasTrigger } from './collision'
+import { showGameOverMenu, showTextArea } from './menu'
 // import { initUi, fillTextAt } from './ui'
 
 // -- References --
@@ -23,12 +23,13 @@ let deltaTime; // time since last frame in seconds
 let trackDimensions = { width: 200, height: 500 }
 ctx.font = '25px Arial';
 ctx.lineWidth = 5
-const DEBUG_skipMenu = true
+const DEBUG_skipMenu = false
 
 // -- Canvas resizing --
 const resizeCanvas = async () => {
     canvas.width = window.innerWidth
     canvas.height = window.innerHeight
+    // cam.distance = 2000
     cam.distance = cam.getDistanceBasedOnTrackHeight(trackDimensions.height, 2.5)
     cam.updateViewport()
     ctx.lineWidth = 5
@@ -43,7 +44,8 @@ window.addEventListener("resize", () => {
 const center = { x: canvas.width / 2, y: canvas.height / 2 }
 const DEBUG = new Debug(ctx, cam)
 const player = new Player(center);
-initTracks(ctx, UTILS, 5, center, trackDimensions)
+UTILS.init(DEBUG)
+initTracks(ctx, UTILS, DEBUG, 20, center, trackDimensions)
 initPlayer(ctx, inputs, center, DEBUG, UTILS)
 initCollision(ctx, player, tracks, UTILS, DEBUG, center)
 // initUi(ctx, cam)
@@ -83,15 +85,18 @@ const gameLoop = (timeStamp) => {
 
     // GameObject logic
     player.move()
-    updateTracks(player.pos.y)
-    renderTracks()
     if (hasCollision(currentTrackInd)) {
         playing = false // condition for game over
     }
+    if (hasTrigger(currentTrackInd)) {
+        updateTracks()
+    }
+    renderTracks()
+    player.render()
 
     // UI logic
     // fillTextAt(score)
-    showTextArea(score)
+    showTextArea(fps)
 
     // Debug logic
     // DEBUG.showFPS(fps)
@@ -118,7 +123,7 @@ window.addEventListener("gameOver", () => {
     playing = false
 }, true)
 
-if (DEBUG_skipMenu){
+if (DEBUG_skipMenu) {
     initInputs()
     document.querySelector(".gameMenu__menu").style.visibility = "hidden"
     gameLoop()

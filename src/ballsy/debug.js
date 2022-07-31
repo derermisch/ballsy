@@ -5,6 +5,10 @@ export class Debug {
         this.cam = cam
         this.message = message
         this.debuggedOnce = false
+        this.center = {
+            x: this.ctx.canvas.width / 2,
+            y: this.ctx.canvas.height / 2
+        }
     }
     mousePosText = (x, y) => {
         const camCoords = this.cam.screenToWorld(x, y)
@@ -71,5 +75,34 @@ export class Debug {
     }
     resetLogOnce = () => {
         this.debuggedOnce = false
+    }
+    drawLine = (fromVec = { x: 0, y: 0 }, toVec = { x: 0, y: 0 }, color = "green") => {
+        const prevStrokeStyle = this.ctx.strokeStyle
+        this.ctx.beginPath()
+        this.ctx.moveTo(fromVec.x, fromVec.y)
+        this.ctx.lineTo(fromVec.x + toVec.x, fromVec.y + toVec.y)
+        this.ctx.strokeStyle = color
+        this.ctx.stroke()
+        this.ctx.strokeStyle = prevStrokeStyle
+    }
+    
+    drawLineDirect = (fromVec = { x: 0, y: 0 }, toVec = { x: 0, y: 0 }, color = "green") => {
+        const prevStrokeStyle = this.ctx.strokeStyle
+        this.ctx.beginPath()
+        this.ctx.moveTo(fromVec.x, fromVec.y)
+        this.ctx.lineTo(toVec.x, toVec.y)
+        this.ctx.strokeStyle = color
+        this.ctx.stroke()
+        this.ctx.strokeStyle = prevStrokeStyle
+    }
+    
+    drawLineCentered = (fromVec = { x: 0, y: 0 }, toVec = { x: 0, y: 0 }, color = "green") => {
+        const prevStrokeStyle = this.ctx.strokeStyle
+        this.ctx.beginPath()
+        this.ctx.moveTo(this.center.x + fromVec.x, this.center.y + fromVec.y)
+        this.ctx.lineTo(this.center.x + toVec.x, this.center.y + toVec.y)
+        this.ctx.strokeStyle = color
+        this.ctx.stroke()
+        this.ctx.strokeStyle = prevStrokeStyle
     }
 }

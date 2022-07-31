@@ -43,18 +43,15 @@ export class Player {
         this.rotationSpeedAngle = rotationSpeedAngle
     }
     move() {
-        ctx.beginPath()
-        ctx.fillStyle = this.color
+        // ctx.beginPath()
+        // ctx.fillStyle = this.color
         this.moveVector = updateMoveVector(this.moveVector, this.rotationSpeedAngle)
-        // this.pos.x += getPlayerMovevectorX(this.speed.x) //depends on input
         if (!inputs.DEBUG_stopPlayer) {
-            // this.pos.y += this.speed.y //constant
             this.pos.x += this.moveVector.x
             this.pos.y += this.moveVector.y
         }
-        ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2)
-        ctx.fill()
-        // DEBUG.drawLineRelative(this.pos, UTILS.scaleVector(this.moveVector, 100))
+        // ctx.arc(this.pos.x, this.pos.y, this.radius, 0, Math.PI * 2)
+        // ctx.fill()
     }
     render() {
         ctx.beginPath()
