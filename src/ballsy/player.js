@@ -25,8 +25,8 @@ export const getPlayerMovevectorX = (speed) => {
     return toX
 }
 
-const updateMoveVector = (moveVector = { x: 0, y: -1 }, angle = 10, speed = 5) => {
-    const rotVec = UTILS.rotateVectorNormalized(moveVector, inputs.horizontalAxis * angle, speed)
+const updateMoveVector = (moveVector = { x: 0, y: -1 }, angle = 10, speed = 5, DELTATIME) => {
+    const rotVec = UTILS.rotateVectorNormalized(moveVector, inputs.horizontalAxis * angle * DELTATIME, speed * DELTATIME)
     // console.log(rotVec)
     moveVector.x = rotVec.x
     moveVector.y = rotVec.y
@@ -35,7 +35,7 @@ const updateMoveVector = (moveVector = { x: 0, y: -1 }, angle = 10, speed = 5) =
 
 export class Player {
     constructor(pos = { x: center.x, y: center.y }, radius = 10, color = "red", rotationSpeedAngle = 3, speed = 5) {
-        this.pos = { x: pos.x, y: pos.y - radius * 2}
+        this.pos = { x: pos.x, y: pos.y - radius * 2 }
         this.radius = radius
         this.color = color
         this.speed = speed
@@ -43,10 +43,19 @@ export class Player {
         this.moveVector = { x: 0, y: -1 }
         this.rotationSpeedAngle = rotationSpeedAngle
     }
-    move(addRotation, addSpeed) {
+    move(DELTATIME, addRotation, addSpeed) {
         // ctx.beginPath()
         // ctx.fillStyle = this.color
-        this.moveVector = updateMoveVector(this.moveVector, this.rotationSpeedAngle + addRotation, this.speed + addSpeed)
+        if (!DELTATIME) { // DELTATIME === Nan
+            DELTATIME = 1
+        }
+        this.moveVector = updateMoveVector(
+            this.moveVector,
+            this.rotationSpeedAngle + addRotation,
+            this.speed + addSpeed,
+            DELTATIME * 62.5
+        )
+        // this.moveVector = UTILS.scaleVector(this.moveVector, DELTATIME * 62.5)
         if (!inputs.DEBUG_stopPlayer) {
             this.pos.x += this.moveVector.x
             this.pos.y += this.moveVector.y
@@ -61,7 +70,7 @@ export class Player {
         ctx.fill()
     }
     reset() {
-        this.pos = { x: center.x, y: center.y - this.radius * 2}
+        this.pos = { x: center.x, y: center.y - this.radius * 2 }
         this.moveVector = { x: 0, y: -1 }
         // DEBUG.logOnce(this.moveVector)
         // DEBUG.resetLogOnce()

@@ -17,6 +17,7 @@ const gameMenuPlayingEle = document.querySelector(".gameMenu__playing")
 const gameMenuGameoverEle = document.querySelector(".gameMenu__gameOver")
 
 const startGameLoopEvent = new CustomEvent("startGameLoop", { detail: { playing: true } })
+const unlockMovementEvent = new CustomEvent("unlockMovement")
 const gameOverEvent = new CustomEvent("gameOver")
 
 const playing_score = document.querySelector(".gameMenu__playing__textArea__score")
@@ -39,6 +40,10 @@ gameMenuGameoverEle.querySelectorAll(".gameButton")[1].addEventListener("click",
     this.dispatchEvent(gameOverEvent)
     showMainMenu()
 })
+document.querySelector(".gameMenu__playing__startGame").addEventListener("click", function(){
+    this.dispatchEvent(unlockMovementEvent)
+    this.style.visibility = "hidden"
+})
 
 // -- Menu states --
 export const showMainMenu = () => {
@@ -51,13 +56,15 @@ export const showGameMenu = () => {
     gameMenuMenuEle.style.visibility = "hidden"
     gameMenuGameoverEle.style.visibility = "hidden"
     gameMenuPlayingEle.style.visibility = "visible"
+    document.querySelector(".gameMenu__playing__startGame").style.visibility = "visible"
 }
 
-export const showGameOverMenu = () => {
+export const showGameOverMenu = (score) => {
     gameMenuMenuEle.style.visibility = "hidden"
     gameMenuPlayingEle.style.visibility = "hidden"
     gameMenuGameoverEle.style.visibility = "visible"
     dispatchEvent(gameOverEvent)
+    document.querySelector(".gameMenu__gameOver__textArea__score").textContent = "SCORE: " + score
 }
 
 export const showTextArea = (score = "0") => {

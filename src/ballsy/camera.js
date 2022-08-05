@@ -29,7 +29,7 @@ export default class Camera {
      * -Initial calculations.
      */
     init() {
-        this.addListeners();
+        // this.addListeners();
         this.updateViewport();
     }
 

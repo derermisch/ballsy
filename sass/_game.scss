@@ -1,8 +1,8 @@
 canvas {
   position: absolute;
-  left: 0;
-  top: 0;
-  // background-color: rgb(58, 40, 139);
+  width: 100%;
+  height: 100%;
+  background-color: rgb(58, 40, 139);
 }
 
 .gameButton {
@@ -41,11 +41,13 @@ canvas {
   }
   &__playing {
     width: 100%;
+    height: 30%;
+    // background-color: orange;
     &__buttons {
-      position: absolute;
+      width: 10vw;
       @include flexIt();
-      top: 0;
-      left: 0;
+      // top: 0;
+      // left: 0;
     }
     &__buttons > * {
       font-size: 2vw;
@@ -60,6 +62,16 @@ canvas {
         margin-top: 10px;
         color: red;
       }
+    }
+    &__startGame {
+      // background-color: greenyellow;
+      // visibility: hidden;
+      $gobuttonwidth: 30%;
+      $gobuttonheight: 20vh;
+      width: $gobuttonwidth;
+      height: $gobuttonheight;
+      margin-left: (50% - ($gobuttonwidth / 2));
+      margin-top: (50vh - ($gobuttonheight / 2) + 20vh);
     }
   }
   &__gameOver {
@@ -76,52 +88,19 @@ canvas {
   }
 }
 
-// .gameMenu {
-//   width: 100%;
-//   height: 100%;
-//   position: absolute;
-//   z-index: 1;
-//   >*{
-//     position: absolute;
-//     // background-color: blue;
-//     top: 0;
-//     left: 0;
-//     @include flexIt($alignIt: flex-start);
-//     width: 100%;
-//     height: 100%;
-//     // width: ;
-//   }
-//   &__menu {
-//     visibility: visible;
-//     @include flexIt();
-//     // background-color: blue;
-//     &__buttons {
-//     @include flexIt();
-//     }
-//   }
-//   &__playing {
-//     visibility: hidden;
-//     width: 100%;
-//     height: 5%;
-//     &__buttons {
-//       position: absolute;
-//       @include flexIt();
-//       top: 0;
-//       left: 0;
-//     }
-//     &__textArea {
-//       position: absolute;
-//       top: 0;
-//       right: 0;
-//       color: red;
-//       font-size: 3vw;
-//       &__score {
-//         margin-right: 10px;
-//         margin-top: 10px;
-//       }
-//     }
-//   }
-//   &__gameOver {
-//     visibility: hidden;
-//   }
-// }
+.gameTouchField {
+  > * {
+    position: absolute;
+    width: 50%;
+    height: 70%;
+    z-index: 0; // Changing priority, when game is started
+    bottom: 0;
+  }
+  &__left {
+    // background-color: rgba(255, 0, 0, 0.5);
+  }
+  &__right {
+    // background-color: rgba(0, 0, 255, 0.5);
+    right: 0;
+  }
+}

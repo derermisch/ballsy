@@ -3,7 +3,10 @@ import Camera from "./camera.js"
 import * as UTILS from "./utils"
 import { Debug } from "./debug"
 import { initPlayer, Player } from "./player"
-import { inputs, updateHorizontalAxis, resetInputs, initInputs } from "./input"
+import {
+    createTouchOverlay, inputs, updateHorizontalAxis,
+    resetInputs, initInputs
+} from "./input"
 import {
     initTracks, renderTracks, updateTracks,
     tracks, currentTrackInd, generateInitialTracks, score
@@ -19,7 +22,7 @@ const ctx = canvas.getContext("2d")
 const cam = new Camera(ctx, { distance: 2000 }) // 2000 is good
 
 // -- Global variables/settings --
-let deltaTime; // time since last frame in seconds
+let deltaTime = 0; // time since last frame in seconds
 let trackDimensions = { width: 200, height: 500 }
 ctx.font = '25px Arial';
 ctx.lineWidth = 5
@@ -44,9 +47,7 @@ const resizeCanvas = async () => {
     cam.updateViewport()
     ctx.lineWidth = 5
     window.getSelection().removeAllRanges()
-    if (isTouchEnabled){
-        touchEnabled = true
-    }
+    createTouchOverlay(isTouchEnabled())
 }
 resizeCanvas()
 window.addEventListener("resize", () => {
@@ -73,6 +74,8 @@ let addSpeed = 0
 let addRotation = 0
 const gameLoop = (timeStamp) => {
     if (!playing) {
+        const points = score
+
         // reset inputs first
         resetInputs()
 
@@ -83,7 +86,7 @@ const gameLoop = (timeStamp) => {
         // clear screen, cancel game loop, show menu
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         cancelAnimationFrame(reqId)
-        showGameOverMenu()
+        showGameOverMenu(points)
         return
     }
     // clear screen first, then start cam
@@ -100,7 +103,7 @@ const gameLoop = (timeStamp) => {
 
     // GameObject logic
     // const addSpeed = (score > 0) ? playerSpeed / 100
-    player.move(addRotation, addSpeed)
+    player.move(deltaTime, addRotation, addSpeed)
     if (hasCollision(currentTrackInd)) {
         playing = false // condition for game over
     }
