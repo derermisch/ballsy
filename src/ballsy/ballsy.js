@@ -12,7 +12,7 @@ import {
     tracks, currentTrackInd, generateInitialTracks, score
 } from './tracks'
 import { initCollision, hasCollision, hasTrigger } from './collision'
-import { showGameOverMenu, showTextArea } from './menu'
+import { showGameOverMenu, showGameStartMenus, showTextArea } from './menu'
 // import { initUi, fillTextAt } from './ui'
 
 // -- References --
@@ -48,12 +48,15 @@ const resizeCanvas = async () => {
     ctx.lineWidth = 5
     window.getSelection().removeAllRanges()
     createTouchOverlay(isTouchEnabled())
+
+    document.querySelector(".gameMenu__menu__heading").addEventListener("click", () => {
+        console.log("TEST")
+    })
 }
 resizeCanvas()
 window.addEventListener("resize", () => {
     resizeCanvas()
 })
-
 // -- Object initializations --
 const center = { x: canvas.width / 2, y: canvas.height / 2 }
 const DEBUG = new Debug(ctx, cam)
@@ -67,6 +70,7 @@ initCollision(ctx, player, tracks, UTILS, DEBUG, center)
 
 // -- Game loop --
 let playing = true
+let isRetry = false
 let oldTimeStamp;
 let fps;
 let reqId;
@@ -86,7 +90,15 @@ const gameLoop = (timeStamp) => {
         // clear screen, cancel game loop, show menu
         ctx.clearRect(0, 0, canvas.width, canvas.height)
         cancelAnimationFrame(reqId)
-        showGameOverMenu(points)
+
+        //For future: work out more elegant solution..
+        //Menu logic shouldnt be here
+        if (!isRetry){ 
+            showGameOverMenu(points)
+        } else {
+            showGameStartMenus()
+        }
+        isRetry = false
         return
     }
     // clear screen first, then start cam
@@ -133,12 +145,12 @@ const gameLoop = (timeStamp) => {
 
 window.addEventListener("startGameLoop", (e) => {
     // document.body.style.cursor = "none"
-    playing = e.detail.playing
+    playing = true
     reqId = requestAnimationFrame(gameLoop)
 }, true)
 
-window.addEventListener("gameOver", () => {
-    // document.body.style.cursor = "auto"
+window.addEventListener("gameOver", (e) => {
+    isRetry = e.detail.fromPaused
     playing = false
     addRotation = 0
     addSpeed = 0

@@ -1,5 +1,10 @@
-export const createTouchOverlay = async (isTouch) => {
-    if (!isTouch) return //TODO: if there is a touchField, delete it
+export const createTouchOverlay = async (_isTouch) => {
+    isTouch = _isTouch
+    if (!isTouch) return
+    const oldTouchField = document.querySelector(".gameTouchField")
+    if (oldTouchField) {
+        return
+    }
 
     // Create Touch overlay: Two invisible boxes, for left and right side of screen
     const touchField = document.createElement("div")
@@ -16,16 +21,19 @@ export const createTouchOverlay = async (isTouch) => {
     document.body.append(touchField)
 }
 
-const setTouchFieldToFront = () => {
-    document.querySelectorAll(".gameTouchField > *").forEach(item => item.style.zIndex = 2)
-}
+// const setTouchFieldToFront = () => {
+//     if (!isTouch) return
+//     document.querySelectorAll(".gameTouchField > *").forEach(item => item.style.zIndex = 0)
+// }
 
-const setTouchFieldToBack = () => {
-    document.querySelectorAll(".gameTouchField > *").forEach(item => item.style.zIndex = 0)
-}
+// const setTouchFieldToBack = () => {
+//     if (!isTouch) return
+//     document.querySelectorAll(".gameTouchField > *").forEach(item => item.style.zIndex = 0)
+// }
 
 // Event listeners are added, after game has started
 const addTouchListeners = () => {
+    if (!isTouch) return
     const touchFieldLeft = document.querySelector(".gameTouchField__left")
     const touchFieldRight = document.querySelector(".gameTouchField__right")
     // console.log(touchFieldLeft, touchFieldRight)
@@ -45,6 +53,8 @@ const addTouchListeners = () => {
         inputs.right = 0
     }, true)
 }
+
+let isTouch = false
 
 export const inputs = {
     left: 0,
@@ -79,19 +89,24 @@ export const updateHorizontalAxis = () => {
 }
 
 let listenToInputs = false
+let movementUnlocked = false
 
 // window.addEventListener("startGameLoop", initInputs, true)
 window.addEventListener("unlockMovement", () => {
-    setTouchFieldToFront()
     addTouchListeners()
     initInputs()
     inputs.DEBUG_stopPlayer = false
+    movementUnlocked = true
 }, true)
 window.addEventListener("gameOver", () => {
-    setTouchFieldToBack()
     resetInputs()
     inputs.DEBUG_stopPlayer = true
-} , true)
+    movementUnlocked = false
+}, true)
+window.addEventListener("gamePaused", () => {
+    if (!movementUnlocked) return
+    inputs.DEBUG_stopPlayer = !inputs.DEBUG_stopPlayer
+}, true)
 
 window.addEventListener("keydown", (e) => {
     if (!listenToInputs) return
@@ -109,7 +124,7 @@ window.addEventListener("keydown", (e) => {
             break;
         case "ArrowDown":
             // console.log("down")
-            if (inputs.DEBUG_playerCanStopAlways){
+            if (inputs.DEBUG_playerCanStopAlways) {
                 inputs.DEBUG_stopPlayer = !inputs.DEBUG_stopPlayer
             }
             // Down pressed
