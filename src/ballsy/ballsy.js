@@ -13,6 +13,7 @@ import {
 } from './tracks'
 import { initCollision, hasCollision, hasTrigger } from './collision'
 import { showGameOverMenu, showGameStartMenus, showTextArea } from './menu'
+import "./sounds"
 // import { initUi, fillTextAt } from './ui'
 
 // -- References --

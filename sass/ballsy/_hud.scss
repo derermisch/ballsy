@@ -41,12 +41,16 @@ $navBarSize: 3vw;
 
 .gameMenu__hud__navBars.active {
   > :first-child {
-    transform: translateY($navBarSize) rotate(45deg);
+    transform-origin: left;
+    transform: rotate(45deg);
+    width: 80%;
   }
   > :nth-child(2) {
     opacity: 0;
   }
   > :last-child {
-    transform: translateY(-$navBarSize) rotate(-45deg);
+    transform-origin: left;
+    transform: rotate(-45deg);
+    width: 80%;
   }
 }

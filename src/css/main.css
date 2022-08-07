@@ -180,8 +180,11 @@ canvas {
 }
 
 .gameMenu__hud__navBars.active > :first-child {
-  -webkit-transform: translateY(3vw) rotate(45deg);
-          transform: translateY(3vw) rotate(45deg);
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+  width: 80%;
 }
 
 .gameMenu__hud__navBars.active > :nth-child(2) {
@@ -189,8 +192,11 @@ canvas {
 }
 
 .gameMenu__hud__navBars.active > :last-child {
-  -webkit-transform: translateY(-3vw) rotate(-45deg);
-          transform: translateY(-3vw) rotate(-45deg);
+  -webkit-transform-origin: left;
+          transform-origin: left;
+  -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+  width: 80%;
 }
 
 .gameMenu__playing__goBtn {
