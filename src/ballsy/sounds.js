@@ -1,16 +1,13 @@
 import scoreIncreasedSound from "./sounds/scoreIncreased.wav"
 import playerCrashedSound from "./sounds/playerCrashed.wav"
 
-const sound = new Audio()
+const scoreIncreasedAudio = new Audio(scoreIncreasedSound)
+const playerCrashedAudio = new Audio(playerCrashedSound)
 
 window.addEventListener("scoreIncreased", () => {
-    sound.src = scoreIncreasedSound
-    sound.load()
-    sound.play()
+    scoreIncreasedAudio.play()
 }, true)
 
 window.addEventListener("playerCrashed", () => {
-    sound.src = playerCrashedSound
-    sound.load()
-    sound.play()
+    playerCrashedAudio.play()
 }, true)

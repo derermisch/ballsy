@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ballsy</title>
+    <link rel="icon" type="image/png" href="./ballsyFavicon.png" />
   </head>
   <body>
     <div class="gameMenu">
@@ -12,8 +13,9 @@
         <button class="gameMenu__menu__startBtn gameBtn">Start</button>
         <p class="gameMenu__menu__info">
           <br /><b>How to play</b><br />
-          To toggle movement, press the arrow down key.<br />
           To stir the player, use left and right arrow keys.<br />
+          (Or left and right side of the screen on mobile)<br />
+          Click on the menu icon or press ESC to open the menu.<br />
           The further you'll go, the faster you'll be.<br />
           Don't hit the walls!
         </p>
@@ -36,13 +38,15 @@
         </div>
       </div>
       <div class="gameMenu__gameOver">
-          <p class="gameMenu__gameOver__textArea">
-            SCORE: 0
-          </p>
-          <div class="gameMenu__gameOver__buttons">
-            <button class="gameMenu__gameOver__buttons__retry gameBtn">Retry</button>
-            <button class="gameMenu__gameOver__buttons__menu gameBtn">Menu</button>
-          </div>
+        <p class="gameMenu__gameOver__textArea">SCORE: 0</p>
+        <div class="gameMenu__gameOver__buttons">
+          <button class="gameMenu__gameOver__buttons__retry gameBtn">
+            Retry
+          </button>
+          <button class="gameMenu__gameOver__buttons__menu gameBtn">
+            Menu
+          </button>
+        </div>
       </div>
     </div>
     <canvas id="canvas"></canvas>
