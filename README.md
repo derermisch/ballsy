@@ -1,4 +1,4 @@
-# ballsy - an HTML Canvas game
+# ballsy - an HTML Canvas game 🎮
 
 ### Try it out
 1) Download the project from gitHub
@@ -12,6 +12,10 @@
 This project was done using the HTML5 canvas API ,vanilla javascript and scss.
 The main file "ballsy.js" contains the setup and gameloop.
 Everything else is split into fitting files, like menu logic in one file and sound logic in another.
+
+### How the game works
+You control a ball (circle) which you have to navigate along a generated path.
+The further you get, the faster you'll be. If you collide with a wall, the game is over.
 
 ### What I've learned
 When building your own game engine it is important to come up with a good structure for all the files and classes
