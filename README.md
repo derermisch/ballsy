@@ -1,4 +1,5 @@
 # ballsy - an HTML Canvas game 🎮
+# Check it out live: https://www.fabestarred.com/ballsy
 
 ### Try it out
 1) Download the project from gitHub
