@@ -39,6 +39,13 @@ const isTouchEnabled = () => {
         (navigator.msMaxTouchPoints > 0);
 }
 
+// -- Disable double tap to zoom for Ipad --
+// https://stackoverflow.com/questions/37808180/disable-viewport-zooming-ios-10-safari?noredirect=1&lq=1
+document.addEventListener("touchend", (event) => {
+    event.preventDefault()
+    event.target.click()
+})
+
 // -- Canvas resizing --
 const resizeCanvas = async () => {
     canvas.width = window.innerWidth

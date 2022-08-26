@@ -5,10 +5,9 @@
           box-sizing: border-box;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  font-family: "Verdana", sans-serif;
+#ballsyBody {
+  -ms-touch-action: none;
+      touch-action: none;
   overflow: hidden;
 }
 
